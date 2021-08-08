@@ -1,0 +1,13 @@
+{
+  "name": "wort-gd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "@amnrst",
+  "license": "MIT",
+  "scripts": {
+      "start": "node index.js"
+  },
+  "dependencies": {
+    "@types/node": "^16.4.13"
+  }
+}
