@@ -5,9 +5,10 @@
   "author": "@amnrst",
   "license": "MIT",
   "scripts": {
-      "start": "node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "@types/node": "^16.4.13"
+    "@types/node": "^16.4.13",
+    "puppeteer": "^10.2.0"
   }
 }
