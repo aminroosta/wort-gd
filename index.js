@@ -10,8 +10,8 @@ let browser;
     });
 })();
 
-const QUERY_URL = 'https://wort.ir/woerterbuch/woerter?q=mit';
-const QUERY_API_URL = 'https://api.wort.ir/api/vocab/search/de-fa/de?query=mit';
+const QUERY_URL = 'https://wort.ir/woerterbuch/woerter?q=';
+const QUERY_API_URL = 'https://api.wort.ir/api/vocab/search/de-fa/de?query=';
 const DETAILS_URL = 'https://wort.ir/woerterbuch/deutsch-persisch/';
 const DETAILS_API_URL = 'https://api.wort.ir/api/vocab/details/de?slug=/woerterbuch/deutsch-persisch/';
 
@@ -25,7 +25,7 @@ async function wortRequest(word, page_url, api_url) {
 
         const response = await page.waitForResponse(r => {
             return (r.url() === api_url + word) && r.status() === 200;
-        }, { timeout: 5000 });
+        }, { timeout: 10000 });
 
         json = await response.json();
 
@@ -42,14 +42,14 @@ async function wortRequest(word, page_url, api_url) {
 const server = http.createServer(async (req, res) => {
     const parsed = url.parse(req.url, true);
     let response = { error: "no query string 'word=?'" };
-    console.log(parsed);
     if(parsed.query && parsed.query.word) {
         const key = parsed.query.word;
-        const details = await wortRequest(key, DETAILS_URL, DETAILS_API_URL);
-        const query = await wortRequest(key, QUERY_URL, QUERY_API_URL);
+        const [ query, details ]= await Promise.all([
+            wortRequest(key, QUERY_URL, QUERY_API_URL),
+            wortRequest(key, DETAILS_URL, DETAILS_API_URL),
+        ]);
         response = { details, query };
     }
-    console.log(response);
 
     res.writeHeader(200, {"Content-Type": "text/html"});
 	res.end(JSON.stringify(response));
