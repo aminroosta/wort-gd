@@ -52,8 +52,27 @@ const server = http.createServer(async (req, res) => {
         response = { details, query };
     }
 
-    res.writeHeader(200, {"Content-Type": "text/html"});
-	res.end(JSON.stringify(response));
+    // res.writeHeader(200, {"Content-Type": "application/json; charset=utf-8"});
+    res.writeHeader(200, {"Content-Type": "text/html; charset=utf-8"});
+    // res.setHeader("Content-Type", "application/json; charset=utf-8");
+	res.end(`
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>blah</title>
+</head>
+<body>
+
+<p>I'm the content</p>
+<code>${
+    JSON.stringify(response)
+}</code>
+
+</body>
+</html>
+`
+    );
 });
 
 server.listen(8081, '0.0.0.0');
