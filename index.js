@@ -4,10 +4,11 @@ const puppeteer = require("puppeteer");
 
 let browser;
 (async () => {
-	browser = await puppeteer.launch({
+    browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']})
+	// browser = await puppeteer.launch({
         // headless: false,
         // executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-    });
+    // });
 })();
 
 const QUERY_URL = 'https://wort.ir/woerterbuch/woerter?q=';
